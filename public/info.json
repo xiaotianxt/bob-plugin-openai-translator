@@ -164,6 +164,24 @@
       },
       "title": "温度",
       "type": "text"
+    },
+    {
+      "defaultValue": true,
+      "identifier": "enableFrequencyPenalty",
+      "desc": "是否包含 'frequency_penalty' 参数。如果服务提供商不支持，请禁用此选项。",
+      "title": "启用频率惩罚",
+      "type": "toggle"
+    },
+    {
+      "defaultValue": "1",
+      "desc": "可选项。频率惩罚值越高，模型越不容易重复相同的行。默认值为 1",
+      "identifier": "frequencyPenalty",
+      "textConfig": {
+        "placeholderText": "1",
+        "type": "visible"
+      },
+      "title": "频率惩罚",
+      "type": "text"
     }
   ],
   "summary": "AI powered translator",

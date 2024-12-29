@@ -131,3 +131,23 @@
   - The higher the temperature value, the more random and creative the generated text will be
 
   - For translation tasks, it is recommended to set around `0.2`; for polishing tasks, it can be appropriately increased. If accuracy is highly required, it can be set to `0`
+
+### Enable Frequency Penalty
+
+- **Optional**
+- **Default value:** `true`
+
+- **Description**
+
+  - Whether to include the `frequency_penalty` parameter in the API request.
+  - Disable this option if your service provider does not support `frequency_penalty`.
+
+### Frequency Penalty
+
+- **Optional**
+- **Default value:** `1`
+
+- **Description**
+
+  - Adjusts the likelihood of the model repeating the same line verbatim.
+  - Higher values decrease the probability of repetition.

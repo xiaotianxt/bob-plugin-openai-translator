@@ -53,18 +53,17 @@ export class OpenAiAdapter extends BaseAdapter {
   }
 
   public buildRequestBody(query: TextTranslateQuery): Record<string, unknown> {
-    const { customSystemPrompt, customUserPrompt } = $option;
+    const { customSystemPrompt, customUserPrompt, enableFrequencyPenalty } = $option;
     const { generatedSystemPrompt, generatedUserPrompt } = generatePrompts(query);
 
     const systemPrompt = replacePromptKeywords(customSystemPrompt, query) || generatedSystemPrompt;
     const userPrompt = replacePromptKeywords(customUserPrompt, query) || generatedUserPrompt;
 
-    return {
+    const body: Record<string, unknown> = {
       model: this.getModel(),
       temperature: this.getTemperature(),
       max_tokens: 1000,
       top_p: 1,
-      frequency_penalty: 1,
       presence_penalty: 1,
       stream: this.isStreamEnabled(),
       messages: [
@@ -78,6 +77,11 @@ export class OpenAiAdapter extends BaseAdapter {
         },
       ],
     };
+
+    if (enableFrequencyPenalty) {
+      body.frequency_penalty = this.getFrequencyPenalty();
+    }
+    return body;
   }
 
   public parseResponse(response: HttpResponse<GeminiResponse | OpenAiChatCompletion>): string {
@@ -200,5 +204,9 @@ export class OpenAiAdapter extends BaseAdapter {
     } catch (error) {
       handleValidateError(completion, error);
     }
+  }
+
+  private getFrequencyPenalty(): number {
+    return Number($option.frequencyPenalty) ?? 1;
   }
 }
